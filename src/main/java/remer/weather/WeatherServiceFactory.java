@@ -1,0 +1,23 @@
+package remer.weather;
+
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class WeatherServiceFactory
+{
+    public WeatherService getService()
+    {
+        // retrofit object allows us to create the objects
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.openweathermap.org/")  // server connecting to
+                // Configure Retrofit to use Gson to turn the Json into Objects
+                .addConverterFactory(GsonConverterFactory.create())
+                // Configure Retrofit to use Rx
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build();
+
+        // given all these things, create a product
+        return retrofit.create(WeatherService.class);
+    }
+}
