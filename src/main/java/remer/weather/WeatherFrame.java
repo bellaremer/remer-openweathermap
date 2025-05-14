@@ -1,9 +1,9 @@
 package remer.weather;
 
 import com.andrewoid.apikeys.ApiKey;
+import remer.weather.json.WeatherResponse;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class WeatherFrame extends JFrame
 {

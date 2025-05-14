@@ -2,6 +2,7 @@ package remer.weather;
 
 import com.andrewoid.apikeys.ApiKey;
 import org.junit.jupiter.api.Test;
+import remer.weather.json.WeatherResponse;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

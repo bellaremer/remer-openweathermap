@@ -1,6 +1,7 @@
 package remer.weather;
 
 import io.reactivex.rxjava3.core.Single;
+import remer.weather.json.WeatherResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
