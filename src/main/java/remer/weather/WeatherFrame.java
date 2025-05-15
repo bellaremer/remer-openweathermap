@@ -1,47 +1,57 @@
 package remer.weather;
 
 import com.andrewoid.apikeys.ApiKey;
-import remer.weather.json.WeatherResponse;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class WeatherFrame extends JFrame
 {
-    ApiKey apiKey = new ApiKey();
-    String keyString = apiKey.get();
+    JLabel label = new JLabel("Loading weather...", SwingConstants.CENTER);
+    JTextField cityField = new JTextField("Edison", 20);
 
-    public WeatherFrame(String city)
+    public WeatherFrame()
     {
         setTitle("Weather App");
         setSize(400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JLabel label = new JLabel("Loading weather...", SwingConstants.CENTER);
-        add(label);
+        setLayout(new BorderLayout());
+        JPanel topPanel = new JPanel();
+        topPanel.add(new JLabel("City:"));
+        topPanel.add(cityField);
 
-        // Fetch weather and update label
-        new Thread(() -> {
-            try
+        add(topPanel, BorderLayout.NORTH);
+        add(label, BorderLayout.CENTER);
+
+        ApiKey apiKey = new ApiKey();
+        WeatherService service = new WeatherServiceFactory().getService();
+        WeatherController controller = new WeatherController(label, service, apiKey);
+
+        // Fetch for default city
+        controller.display(cityField.getText());
+
+        // Listen for Enter key
+        cityField.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(KeyEvent e)
             {
-                WeatherService service = new WeatherServiceFactory().getService();
-                WeatherResponse response = service.weatherNow(city, keyString, "imperial").blockingGet();
-
-                SwingUtilities.invokeLater(() ->
-                        label.setText("Temperature in Edison, NJ: " + response.main.temp + "°F"));
-            } catch (Exception e) {
-                SwingUtilities.invokeLater(() ->
-                        label.setText("Failed to fetch weather"));
+                if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                {
+                    controller.display(cityField.getText());
+                }
             }
-        }).start();
+        });
     }
 
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(() -> {
-            WeatherFrame frame = new WeatherFrame(
-                    "Edison,New Jersey"
-            );
+            WeatherFrame frame = new WeatherFrame();
             frame.setVisible(true);
         });
     }

@@ -17,7 +17,6 @@ public class WeatherServiceFactory
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
 
-        // given all these things, create a product
         return retrofit.create(WeatherService.class);
     }
 }
