@@ -3,7 +3,7 @@ package remer.weather.json;
 public class Main
 {
     public double temp;
-    public double temp_min;
-    public double temp_max;
+    public double tempMin;
+    public double tempMax;
 }
 

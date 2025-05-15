@@ -39,8 +39,8 @@ public class WeatherController
         {
             sb.append("Current conditions: ").append(response.weather.get(0).description).append("<br>");
         }
-        sb.append("Temp min: ").append(response.main.temp_min).append("°F<br>");
-        sb.append("Temp max: ").append(response.main.temp_max).append("°F");
+        sb.append("Temp min: ").append(response.main.tempMin).append("°F<br>");
+        sb.append("Temp max: ").append(response.main.tempMax).append("°F");
         sb.append("</html>");
         label.setText(sb.toString());
     }
